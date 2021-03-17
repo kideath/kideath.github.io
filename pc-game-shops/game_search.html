@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>ИгроЦены</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="./css/bootstrap.min.css">
+        <!--link rel="stylesheet" href="./css/jquery.dataTables.min.css"-->
+        <link rel="stylesheet" href="./css/dataTables.bootstrap.min.css">
+	<style type="text/css" class="init">
+	</style>          
+
+        <script src="./js/jquery-2.1.4.min.js"></script>
+        <script src="./js/jquery.dataTables.min.js"></script>    
+        <script src="./js/dataTables.bootstrap.min.js"></script>     
+        <!--script src="./js/bootstrap.min.js"></script-->
+      
+        <script type="text/javascript" language="javascript" class="init">
+function openInNewTab(url) {
+    var game= $("#game").val();
+    game= encodeURIComponent(game);
+    var win = window.open(url+game, '_blank');
+    win.blur();
+    //win.focus();
+}            
+            
+$(document).ready(function() {
+    $('#table1').DataTable( {
+        "ajax": "game_shops.txt",
+        "language": {
+            "url": "./js/dataTables.Russian.json"
+        },        
+        "columnDefs": [
+            {
+                "render": function ( data, type, row ) {
+                    return "<img src='"+row[0] +"' width='24' height='24'>";
+                },
+                // https://www.datatables.net/examples/api/counter_columns.html
+                "searchable": false,
+                //"orderable": false,
+                "targets": 0
+            },
+            {
+                "render": function ( data, type, row ) {
+                    return "<a href='"+row[2] +"' target='_blank'>"+row[2]+"</a>";
+                },
+                "targets": 2
+            },
+            {
+                "render": function ( data, type, row ) {
+                    return row[3] === "" ? "" : "<button class=\"btn btn-default btn-xs\" onclick=\"openInNewTab('"+row[3]+"')\"><i class='glyphicon glyphicon-search'></i></button>";
+                },
+                "searchable": false,
+                "orderable": false,                
+                "targets": 3
+            }            
+            //{ "visible": false,  "targets": [ 3 ] }
+        ],
+        //"order": [[ 1, ['desc','asc'] ]]
+        "paging":   false,
+        //"search": false, 
+        //"ordering": false
+        //"info":     false// */
+    } );
+    
+    
+   
+    
+    
+} );        
+        </script>
+    </head>
+    <body>
+        <div class="container">
+            <section>
+            <h2>ИгроЦены - место, где собраны магазины по продаже игр.</h2>
+            <form>
+              <div class="input-group">
+                <input id="game" type="text" class="form-control" placeholder="Название игры">
+                <div class="input-group-btn">
+                    <button class="btn btn-default" onclick="return false;"><i class="glyphicon glyphicon-search"></i></button>
+                </div>
+              </div>
+            </form>
+            <br><br>
+            <!-- https://www.datatables.net/examples/advanced_init/column_render.html -->
+            <div class="demo-html"></div>
+            <table class="table table-striped" id="table1" width="100%" cellspacing="0">
+              <thead>
+                <tr>
+                  <th width="5%"></th>
+                  <th>Название</th>
+                  <th>Ссылка</th>
+                  <th width="5%"></th>
+                </tr>
+              </thead>
+            </table>
+            </section>
+        </div>        
+        
+    </body>
+</html>
